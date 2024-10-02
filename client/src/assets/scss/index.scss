@@ -1,0 +1,36 @@
+@import "./base";
+
+///components scss
+@import "./components/home";
+@import "./components/login";
+@import "./components/navbar";
+@import "./components/newPostPage";
+@import "./components/profileUpdatePage";
+@import "./components/register";
+@import "./components/chat";
+@import "./components/filter";
+@import "./components/userMenu";
+@import "./components/mobileNavBar";
+
+
+///pages scss
+@import "./pages/card";
+@import "./pages/catalog";
+@import "./pages/homeCard";
+@import "./pages/layout";
+@import "./pages/listPage";
+@import "./pages/loader";
+@import "./pages/profilePage";
+@import "./pages/singlePage";
+@import "./pages/searchBar";
+@import "./pages/list";
+@import "./pages/slider";
+
+
+
+
+
+//responsive
+@import "./responsive";
+
+

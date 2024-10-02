@@ -1,0 +1,78 @@
+.mobileNavBar {
+    display: none;
+    width: 100%;
+    box-shadow: 0px 0px 12px rgba(35, 31, 32, 0.06);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9;
+    background-color: #ff5359;
+    .navigation {
+      width: 100%;
+      height: 100%;
+      border-radius: 0px;
+      .list {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .item {
+          text-align: center;
+          cursor: pointer;
+          transition: 0.3s ease;
+          span{
+            color: #fff;
+          }
+          &::marker{
+            display: none;
+            width: 0;
+            height: 0;
+          }
+          &:hover {
+            opacity: 0.8;
+          }
+          a {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100%;
+            &.active {
+              .itemName {
+                &.blue {
+                  color: #1155ed;
+                }
+              }
+            }
+          }
+          .icon {
+            width: 24px;
+            height: 24px;
+            margin: 0 auto;
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+            }
+          }
+          .itemName {
+            font-size: 10px;
+            color: #231f2050;
+          }
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .mobileNavBar {
+      display: block;
+    }
+  }
+  
+
+  @media (max-width:350px) {
+    .mobileNavBar .navigation .list{
+      gap: 25px;
+    }
+  }

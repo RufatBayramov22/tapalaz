@@ -1,0 +1,232 @@
+@import "../responsive";
+
+nav {
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ff5359;
+  margin: 2% 0;
+  border-radius: 15px;
+  .right-side{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    .lang{
+      select{
+        outline: none;
+        
+      }
+    }
+  }
+  a {
+    transition: all 0.4s ease;
+
+    @include sm {
+      display: none;
+    }
+
+    &:hover {
+      scale: 1.05;
+    }
+  }
+
+  .left {
+    flex: 3;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    padding: 15px;
+    .logo {
+      font-weight: bold;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      img {
+        width: 28px;
+      }
+
+      span {
+        color: #fff;
+        @include md {
+          display: none;
+        }
+
+        @include sm {
+          display: initial;
+        }
+      }
+    }
+  }
+  .userInfo {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    
+    .burgerMenu{
+      display: none;
+      .container {
+        display: block;
+        position: relative;
+        cursor: pointer;
+        font-size: 20px;
+        user-select: none;
+      
+        input {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+        }
+      
+        .checkmark {
+          position: relative;
+          top: 0;
+          left: 0;
+          height: 1.3em;
+          width: 1.3em;
+      
+          span {
+            width: 32px;
+            height: 2px;
+            background-color:#fece51;
+            position: absolute;
+            transition: all 0.3s ease-in-out;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -ms-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+      
+            &:nth-child(1) {
+              top: 10%;
+            }
+      
+            &:nth-child(2) {
+              top: 50%;
+            }
+      
+            &:nth-child(3) {
+              top: 90%;
+            }
+          }
+        }
+      
+        input:checked + .checkmark {
+          span {
+            &:nth-child(1) {
+              top: 50%;
+              transform: translateY(-50%) rotate(45deg);
+              -webkit-transform: translateY(-50%) rotate(45deg);
+              -moz-transform: translateY(-50%) rotate(45deg);
+              -ms-transform: translateY(-50%) rotate(45deg);
+              -o-transform: translateY(-50%) rotate(45deg);
+            }
+      
+            &:nth-child(2) {
+              top: 50%;
+              transform: translateY(-50%) rotate(-45deg);
+              -webkit-transform: translateY(-50%) rotate(-45deg);
+              -moz-transform: translateY(-50%) rotate(-45deg);
+              -ms-transform: translateY(-50%) rotate(-45deg);
+              -o-transform: translateY(-50%) rotate(-45deg);
+            }
+      
+            &:nth-child(3) {
+              transform: translateX(-50px);
+              -webkit-transform: translateX(-50px);
+              -moz-transform: translateX(-50px);
+              -ms-transform: translateX(-50px);
+              -o-transform: translateX(-50px);
+              opacity: 0;
+            }
+          }
+        }
+      }
+      
+    }
+    @include md {
+      background-color: transparent;
+    }
+
+    a {
+      color: #fff;
+      margin: 20px;
+    }
+
+    .user{
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      .addNews{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+      }
+
+      img{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 20px;
+      }
+      span{
+        color: #fff;
+        @include sm{
+          display: none;
+        }
+      }
+
+      .profile{
+        padding: 12px 24px;
+        background-color: #3249bf;
+        cursor: pointer;
+        border: none;
+        position: relative;
+        
+        .notification{
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: red;
+          color: white;
+          border-radius: 50%;
+          width: 26px;
+          height: 26px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+      }
+    }
+
+    .register {
+      background-color: #fece51;
+    }
+
+
+    }
+  }
+
+
+
+  @media (max-width:768px) {
+    nav{
+      .left{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        a{
+          font-size: 30px !important;
+        }
+      }
+    }
+  }
