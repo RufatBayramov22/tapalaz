@@ -29,41 +29,46 @@ export const register = async (req, res) => {
 };
 
 
+// LOGIN FUNCTION
 export const login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    // Kullanıcıyı veritabanında bul
+    // CHECK IF THE USER EXISTS
     const user = await User.findOne({ username });
-    
-    // Kullanıcı bulunamadıysa hata döndür
-    if (!user) {
-      return res.status(404).json({ message: "Kullanıcı bulunamadı" });
-    }
 
-    // Şifreyi kontrol et (örneğin bcrypt ile)
-    const isMatch = await user.comparePassword(password); // Kullanıcı modelinde bir şifre karşılaştırma fonksiyonu eklemeniz gerekebilir
-    if (!isMatch) {
-      return res.status(401).json({ message: "Geçersiz şifre" });
-    }
+    if (!user) return res.status(400).json({ message: "Invalid Credentials!" });
 
-    // Token oluştur
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: "1h", // Token geçerlilik süresi
-    });
+    // CHECK IF THE PASSWORD IS CORRECT
+    const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    // Cookie'ye token ekle
+    if (!isPasswordValid)
+      return res.status(400).json({ message: "Invalid Credentials!" });
+
+    // GENERATE COOKIE TOKEN AND SEND TO THE USER
+    const age = 1000 * 60 * 60 * 24 * 7;
+
+    const token = jwt.sign(
+      {
+        id: user._id,
+        isAdmin: false,
+      },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: age }
+    );
+
+    const { password: userPassword, ...userInfo } = user.toObject();
+
     res.cookie("token", token, {
-      httpOnly: true, // JavaScript ile erişilemez
-      secure: process.env.NODE_ENV === "production", // Sadece üretimde HTTPS üzerinden gönderilir
-      sameSite: "Strict", // CSRF saldırılarına karşı koruma
-    });
-
-    // Başarılı yanıt
-    res.status(200).json({ message: "Giriş başarılı!", user: { id: user._id, username: user.username } });
-  } catch (error) {
-    console.error("Login error:", error);
-    res.status(500).json({ message: "Giriş sırasında bir hata oluştu." });
+        httpOnly: true,
+        // secure:true,
+        maxAge: age,
+      })
+      .status(200)
+      .json(userInfo);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed to login!" });
   }
 };
 
