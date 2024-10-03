@@ -29,25 +29,23 @@ export const register = async (req, res) => {
 };
 
 // LOGIN FUNCTION
-
 export const login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    // KULLANICININ VAR OLUP OLMADIĞINI KONTROL ET
+    // CHECK IF THE USER EXISTS
     const user = await User.findOne({ username });
 
-    if (!user) {
-      return res.status(400).json({ message: "Invalid Credentials!" });
-    }
+    if (!user) return res.status(400).json({ message: "Invalid Credentials!" });
 
-    // ŞİFRENİN DOĞRULUĞUNU KONTROL ET
+    // CHECK IF THE PASSWORD IS CORRECT
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    if (!isPasswordValid) {
+    if (!isPasswordValid)
       return res.status(400).json({ message: "Invalid Credentials!" });
-    }
 
+    // Token'ı oluşturmak için gerekli süreyi tanımlayın
+    const age = 1000 * 60 * 60 * 24 * 7; // 7 gün
 
     // GENERATE COOKIE TOKEN AND SEND TO THE USER
     const token = jwt.sign(
@@ -59,20 +57,20 @@ export const login = async (req, res) => {
       { expiresIn: age }
     );
 
-    // response'da token'ı da göndermeyi unutmayın
-    res
-      .cookie("token", token, {
-        httpOnly: true,
-        maxAge: age,
-      })
-      .status(200)
-      .json({ token, ...userInfo }); // Burada token'ı ekliyoruz
+    const { password: userPassword, ...userInfo } = user.toObject();
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      // secure: true, // Eğer HTTPS kullanıyorsanız bu satırı açın
+      maxAge: age,
+    })
+    .status(200)
+    .json({ token, ...userInfo }); // Token'ı yanıtın içine ekliyoruz
   } catch (err) {
-    console.error(err);
+    console.log(err);
     res.status(500).json({ message: "Failed to login!" });
   }
 };
-
 // LOGOUT FUNCTION
 export const logout = (req, res) => {
   res.clearCookie("token").status(200).json({ message: "Logout Successful" });
