@@ -25,28 +25,6 @@ function NewPostPage() {
   };
 
 
-  const handleCategoryChange = (e) => {
-    
-    const selectedCategory = e.target.value;
-    setSelectedCategory(selectedCategory);
-    let fields = {};
-
-    switch (selectedCategory) {
-      case 'Avtomobiller':
-        fields = { model: "", engineSize: "", mileage: "", fuelType: "", gearbox: "" };
-        break;
-
-      case 'Mənzillər':
-        fields = { floorNumber: "", roomCount: "", area: "", rentOrSale: "" };
-        break;
-
-      default:
-        fields = {};
-        break;
-    }
-
-    setAdditionalFields(fields);
-  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -105,7 +83,7 @@ function NewPostPage() {
           <form onSubmit={handleSubmit}>
             <div className="item">
               <label htmlFor="type">{t("type")}</label>
-              <select name="type" onChange={handleCategoryChange} required>
+              <select name="type"  required>
                 <option value="">{t("categorySelect")}</option>
                 <optgroup label="Daşınmaz Əmlak">
                   <option value="Mənzillər">{t("apartments")}</option>
