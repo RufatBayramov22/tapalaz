@@ -143,14 +143,15 @@ export const getSavedPosts = async (req, res) => {
 
 
 
-
 export const profilePosts = async (req, res) => {
   const tokenUserId = req.userId;
 
+  if (!tokenUserId) {
+    return res.status(400).json({ message: "Kullanıcı kimliği eksik" });
+  }
+
   try {
-    // Fetch user posts
     const userPosts = await Post.find({ userId: tokenUserId });
-    // Fetch saved posts
     const saved = await SavedPost.find({ userId: tokenUserId }).populate('post');
     const savedPosts = saved.map((item) => item.post);
 

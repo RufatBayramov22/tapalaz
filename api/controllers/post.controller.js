@@ -93,7 +93,6 @@ export const getUserPosts = async (req, res) => {
 };
 
 
-
 export const addPost = async (req, res) => {
   const body = req.body;
   const tokenUserId = req.userId; // Bu alanın doğruluğunu kontrol edin.
@@ -103,26 +102,20 @@ export const addPost = async (req, res) => {
   }
 
   try {
-    // Yeni PostDetail nesnesi oluşturuluyor ve kaydediliyor
     const newPostDetail = new PostDetail({
       desc: body.postDetail?.desc,
       postId: new mongoose.Types.ObjectId(),
     });
     await newPostDetail.save();
 
-    // Yeni Post nesnesi oluşturuluyor
     const newPost = new Post({
       ...body.postData,
       userId: tokenUserId, // Burada kullanıcı kimliğini kullanıyoruz.
       postDetailId: newPostDetail._id,
     });
 
-    // Dinamik alanlarınızı tanımlayın ve post objesine ekleyin
-    const dynamicFields = [
-      'engineSize', 'mileage', 'floorNumber', 'roomCount', 'brand', 'model',
-      'experience', 'author', 'genre', 'breed', 'age', 'carAccessory',
-      'truckLoadCapacity', 'registerNumber', 'waterTransport', 'jobType'
-    ];
+    // Dinamik alanları kontrol et
+    const dynamicFields = ['engineSize', 'mileage', 'floorNumber', 'roomCount', 'brand', 'model', 'experience', 'author', 'genre', 'breed', 'age', 'carAccessory', 'truckLoadCapacity', 'registerNumber', 'waterTransport', 'jobType'];
 
     dynamicFields.forEach(field => {
       if (body.postData[field] !== undefined) {
@@ -130,11 +123,8 @@ export const addPost = async (req, res) => {
       }
     });
 
-    // PostDetail nesnesinin `postId` alanını güncelleyin
     newPostDetail.postId = newPost._id;
     await newPostDetail.save();
-
-    // Yeni postu kaydedin
     await newPost.save();
 
     res.status(200).json(newPost);
