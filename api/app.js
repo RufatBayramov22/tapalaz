@@ -1,8 +1,8 @@
 
+import cookieParser from "cookie-parser";
 import express from "express"
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import cors from "cors"
 import authRoute from "./routes/auth.route.js";
