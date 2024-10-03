@@ -1,4 +1,5 @@
 
+import express from "express"
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
@@ -7,7 +8,6 @@ import cors from "cors"
 import authRoute from "./routes/auth.route.js";
 import postRoute from "./routes/post.route.js";
 import userRoute from "./routes/user.route.js";
-import express from "express"
 dotenv.config();
 const app = express();
 
