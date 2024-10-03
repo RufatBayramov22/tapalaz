@@ -21,7 +21,7 @@ app.use(
     origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true, // İsteklerdeki çerezleri kabul eder
+    credentials: true, // Çerezleri kabul et
   })
 );
 

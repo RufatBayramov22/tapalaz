@@ -1,5 +1,3 @@
-
-
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
@@ -24,10 +22,11 @@ export const register = async (req, res) => {
     res.status(201).json({ message: "User created successfully" });
   } catch (err) {
     console.error("Error details:", err); // Daha fazla bilgi için
-    res.status(500).json({ message: "Failed to create user!", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Failed to create user!", error: err.message });
   }
 };
-
 
 // LOGIN FUNCTION
 
@@ -49,29 +48,25 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid Credentials!" });
     }
 
-    // TOKEN OLUŞTUR VE KULLANICIYA GÖNDER
-    const age = 1000 * 60 * 60 * 24 * 7; // 7 gün
 
+    // GENERATE COOKIE TOKEN AND SEND TO THE USER
     const token = jwt.sign(
       {
         id: user._id,
-        isAdmin: user.isAdmin || false, // Eğer kullanıcı admin ise bunu ekle
+        isAdmin: false,
       },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: '7d' } // Token süresi burada belirtilebilir
+      { expiresIn: age }
     );
 
-    const { password: userPassword, ...userInfo } = user.toObject();
-
-    // ÇEREZ GÜVENLİK AYARLARI
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // Sadece üretim ortamında güvenli çerez
-      sameSite: 'Strict', // CSRF saldırılarına karşı koruma
-      maxAge: age, // Çerezin geçerlilik süresi
-    })
-    .status(200)
-    .json(userInfo);
+    // response'da token'ı da göndermeyi unutmayın
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        maxAge: age,
+      })
+      .status(200)
+      .json({ token, ...userInfo }); // Burada token'ı ekliyoruz
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to login!" });

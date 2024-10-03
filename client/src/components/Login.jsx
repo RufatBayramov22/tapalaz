@@ -30,21 +30,23 @@ function Login() {
           username: values.username,
           password: values.password,
         });
-
-        // Token'ı localStorage'a kaydediyoruz
-        localStorage.setItem("authToken", res.data.token);
-
-        // Kullanıcı bilgilerini güncelleyebiliriz
-        updateUser(res?.data);
-
+    
+        console.log(res.data); // Yanıtı kontrol et
+    
+        // Token'ı localStorage yerine çerez üzerinden almak gerekebilir.
+        // Token alındıktan sonra kullanıcı bilgilerini güncelleyebiliriz
+        updateUser(res.data); // Burada kullanıcı bilgilerini güncelliyoruz
+    
         // Başarılı girişten sonra ana sayfaya yönlendirme yapılıyor
         navigate("/");
       } catch (err) {
-        setErrors({ submit: err.response.data.message });
+        console.log(err.response); // Hata yanıtını kontrol et
+        setErrors({ submit: err.response ? err.response.data.message : "An error occurred!" });
       } finally {
         setSubmitting(false);
       }
     },
+    
   });
 
   return (
