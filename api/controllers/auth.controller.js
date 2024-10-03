@@ -30,44 +30,50 @@ export const register = async (req, res) => {
 
 
 // LOGIN FUNCTION
+
 export const login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    // CHECK IF THE USER EXISTS
+    // KULLANICININ VAR OLUP OLMADIĞINI KONTROL ET
     const user = await User.findOne({ username });
 
-    if (!user) return res.status(400).json({ message: "Invalid Credentials!" });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid Credentials!" });
+    }
 
-    // CHECK IF THE PASSWORD IS CORRECT
+    // ŞİFRENİN DOĞRULUĞUNU KONTROL ET
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    if (!isPasswordValid)
+    if (!isPasswordValid) {
       return res.status(400).json({ message: "Invalid Credentials!" });
+    }
 
-    // GENERATE COOKIE TOKEN AND SEND TO THE USER
-    const age = 1000 * 60 * 60 * 24 * 7;
+    // TOKEN OLUŞTUR VE KULLANICIYA GÖNDER
+    const age = 1000 * 60 * 60 * 24 * 7; // 7 gün
 
     const token = jwt.sign(
       {
         id: user._id,
-        isAdmin: false,
+        isAdmin: user.isAdmin || false, // Eğer kullanıcı admin ise bunu ekle
       },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: age }
+      { expiresIn: '7d' } // Token süresi burada belirtilebilir
     );
 
     const { password: userPassword, ...userInfo } = user.toObject();
 
+    // ÇEREZ GÜVENLİK AYARLARI
     res.cookie("token", token, {
-        httpOnly: true,
-        // secure:true,
-        maxAge: age,
-      })
-      .status(200)
-      .json(userInfo);
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // Sadece üretim ortamında güvenli çerez
+      sameSite: 'Strict', // CSRF saldırılarına karşı koruma
+      maxAge: age, // Çerezin geçerlilik süresi
+    })
+    .status(200)
+    .json(userInfo);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json({ message: "Failed to login!" });
   }
 };
