@@ -33,37 +33,37 @@ function NewPostPage() {
       [name]: value
     }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const formData = new FormData(e.target);
     const inputs = Object.fromEntries(formData);
-
+  
     const postData = {
-        title: inputs.title,
-        price: parseInt(inputs.price),
-        city: inputs.city,
-        type: inputs.type,
-        images: images,
-        ...additionalFields,
+      title: inputs.title,
+      price: parseInt(inputs.price),
+      city: inputs.city,
+      type: inputs.type,
+      images: images,
+      ...additionalFields,
     };
-
+  
     const postDetail = {
-        desc: value,
+      desc: value,
     };
-
+  
     try {
-        const res = await apiRequest.post("/posts/addPost", {
-            postData,
-            postDetail,
-        });
-
-        navigate("/" + res.data._id);
+      const res = await apiRequest.post("/posts/addPost", {
+        postData,
+        postDetail,
+      });
+  
+      navigate("/" + res.data._id);
     } catch (err) {
-        setError(err.message);
+      setError(err.response?.data?.message || err.message); // Hata mesajını daha açıklayıcı hale getirin
     }
   };
+  
 
 
   const cities = [
