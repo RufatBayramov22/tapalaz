@@ -9,7 +9,7 @@ export const authMiddleware = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY); // Token'ı doğrula
+    const decoded = jwt.verify(token, "my-secret-key"); // Token'ı doğrula
     req.userId = decoded.id; // Kullanıcı kimliğini ata
     next(); // Bir sonraki middleware veya route handler'a geç
   } catch (err) {
