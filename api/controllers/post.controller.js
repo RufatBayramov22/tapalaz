@@ -61,7 +61,7 @@ export const getPost = async (req, res) => {
 
     if (token) {
       try {
-        const payload = jwt.verify(token,"my-secret-key");
+        const payload = jwt.verify(token,process.env.JWT_SECRET_KEY);
 
         const saved = await SavedPost.findOne({
           userId: payload.id,

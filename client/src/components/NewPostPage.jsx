@@ -64,7 +64,11 @@ function NewPostPage() {
     }
   };
   
-
+  const handleCategoryChange = (e) => {
+    const value = e.target.value;
+    setSelectedCategory(value);
+    setAdditionalFields({}); // Reset additional fields when changing category
+  };
 
   const cities = [
     'Baki', 'Gəncə', 'Sumqayıt', 'Mingəçevir', 'Şirvan', 'Lənkəran', 'Naxçıvan', 'Şəki', 'Quba', 'Qusar', 'Zaqatala', 'Şamaxı', 'Cəlilabad',  'Salyan',  'Qəbələ', 'Ağstafa',   'Ismayilli', 'Ağdam', 'Ağcabədi', 'Bərdə',"Ağdaş","Ağdərə","Ağsu","Astara","Balakən","Biləsuvar","Cəbrayıl","Culfa","Daşkəsən","Füzuli","Gədəbəy","Göyçay","Göygöl","Göytəpə","Hacıqabul","Horadiz","Imişli","Kəlbəcər","Kürdəmir","Laçın","Lerik","Masallı","Nabran","Naftalan","Neftçala","Oğuz","Ordubad","Qax","Qazax","Qobustan","Qubadlı","Saatlı","Sabirabad","Şabran","Şahbuz","Samux","Şəmkir","Şərur","Siyəzən","Şuşa","Tərtər","Tovuz","Ucar","Xaçmaz","Xankəndi","Xırdalan","Xocalı","Xocavənd","Xudat","Yardımlı","Yevlax","Zəngilan","Zərdab"
@@ -83,7 +87,7 @@ function NewPostPage() {
           <form onSubmit={handleSubmit}>
             <div className="item">
               <label htmlFor="type">{t("type")}</label>
-              <select name="type"  required>
+              <select name="type" onChange={handleCategoryChange}  required>
                 <option value="">{t("categorySelect")}</option>
                 <optgroup label="Daşınmaz Əmlak">
                   <option value="Mənzillər">{t("apartments")}</option>

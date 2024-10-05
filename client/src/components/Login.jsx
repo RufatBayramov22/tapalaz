@@ -30,13 +30,13 @@ function Login() {
           username: values.username,
           password: values.password,
         });
-    
+
         console.log(res.data); // Yanıtı kontrol et
-    
-        // Token'ı localStorage yerine çerez üzerinden almak gerekebilir.
-        // Token alındıktan sonra kullanıcı bilgilerini güncelleyebiliriz
-        updateUser(res.data); // Burada kullanıcı bilgilerini güncelliyoruz
-    
+
+        // Token ve kullanıcı bilgilerini localStorage'a kaydet
+        localStorage.setItem("token", res.data.token); // Token'ı kaydet
+        updateUser(res.data.user); // Kullanıcı bilgilerini güncelle
+
         // Başarılı girişten sonra ana sayfaya yönlendirme yapılıyor
         navigate("/");
       } catch (err) {
@@ -46,7 +46,6 @@ function Login() {
         setSubmitting(false);
       }
     },
-    
   });
 
   return (
@@ -81,7 +80,6 @@ function Login() {
           <Link to="/register">{t("dontHave")}</Link>
         </form>
       </div>
- 
     </div>
   );
 }

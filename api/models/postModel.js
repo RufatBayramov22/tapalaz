@@ -16,7 +16,7 @@ const postSchema = new Schema({
       'Dogs', 'Cats', 'Birds', 'Su', 'Avtobuslar', 'Qeydiyyat Nişanları', 'Simcard',
       'Kompyuter', 'Smart-watch', 'Avadanlıq', 'Biznes', 'Dayələr', 'Foto',
       'Gözəllik', 'IT', 'Logistika', 'Təmizlik', 'Tərcümə', 'Tibbi Xidmətlər', 'Fish', 'Horses',
-      'Avtomobiller', 'Avtomobil üçün aksesuarlar', 'Yük maşınları', 'Mənzillər', 'Villalar', 'Torpaq', 'Office', 'Garage',"Bicycle"
+      'Avtomobiller', 'Car Parts', 'Yük maşınları', 'Mənzillər', 'Villalar', 'Torpaq', 'Office', 'Garage',"Bicycle"
     ],
     required: true
   },
@@ -32,7 +32,7 @@ const postSchema = new Schema({
   model: {
     type: String,
     enum: ['BMW', 'Mercedes-Benz', 'Toyota', 'Honda', 'Ford', 'Chevrolet', 'Nissan', 'Volkswagen'],
-    default: null
+
   },
   engineSize: { type: String, default: null },
   mileage: { type: Number, default: null },
@@ -52,11 +52,11 @@ const postSchema = new Schema({
   number: { type: String, default: null }, // Sim kartlar için
   area: { type: String, default: null }, // Arazi için
   location: { type: String, default: null }, // Arazi için
-  propertyType: {
-    type: String,
-    enum: [''],
-    default: null
-  },
+  // propertyType: {
+  //   type: String,
+  //   enum: [''],
+  //   default: null
+  // },
   rentOrSale: { // Satılık mı, kiralık mı
     type: String,
     enum: ['Rent', 'Sale'],
