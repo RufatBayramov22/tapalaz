@@ -8,7 +8,7 @@ import authRoute from "./routes/auth.route.js";
 import postRoute from "./routes/post.route.js";
 import userRoute from "./routes/user.route.js";
 
-dotenv.config();
+dotenv.config()
 const app = express();
 
 // Helmet ile güvenlik başlıklarını ayarlayın
