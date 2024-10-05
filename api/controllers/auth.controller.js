@@ -20,7 +20,7 @@ export const register = async (req, res) => {
     await newUser.save();
 
     // GENERATE A TOKEN
-    const token = jwt.sign({ id: newUser._id }, JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: newUser._id }, JWT_SECRET_KEY, { expiresIn: '1h' });
 
     res.status(201).json({ message: "User created successfully", token });
   } catch (err) {
