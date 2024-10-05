@@ -3,12 +3,14 @@ import jwt from "jsonwebtoken";
 // Yetkilendirme Middleware
 export const authMiddleware = (req, res, next) => {
   const token = req.cookies.token; // Token'ı cookie'den al
-  console.log(req.cookies.token)
   
   if (!token) {
     return res.status(401).json({ message: 'No token provided, authorization denied' });
   }
 
+  console.log("Token:", token); // Log the token for debugging
+  console.log("JWT Secret Key:", process.env.JWT_SECRET_KEY); // Log secret key for debugging
+  
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY); // Token'ı doğrula
     req.userId = decoded.id; // Kullanıcı kimliğini ata

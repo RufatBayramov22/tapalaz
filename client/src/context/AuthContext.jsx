@@ -1,50 +1,39 @@
 import { createContext, useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode"; // Düzgün içe aktarma
-import { useNavigate } from "react-router-dom";
 
+// Create AuthContext
 export const AuthContext = createContext();
 
+// Create AuthContextProvider component
 export const AuthContextProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(
-    JSON.parse(localStorage.getItem("user")) || null
-  );
+  // Initialize currentUser state with data from local storage or null
+  const [currentUser, setCurrentUser] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
-  const [token, setToken] = useState(localStorage.getItem("token") || null);
+  // Function to update user
   const updateUser = (data) => {
     setCurrentUser(data);
+    // Save updated user data to local storage
+    if (data) {
+      localStorage.setItem("user", JSON.stringify(data));
+    } else {
+      localStorage.removeItem("user"); // Remove user from local storage if null
+    }
   };
 
-  const isTokenExpired = (token) => {
-    if (!token) return true; // Eğer token yoksa süresi dolmuş kabul et
-    const decoded = jwtDecode(token); // jwt_decode yerine jwtDecode kullan
-    const currentTime = Date.now() / 1000; // Şu anki zamanı saniye cinsinden al
-    return decoded.exp < currentTime; // Eğer süresi dolmuşsa true döndür
-  };
-
+  // Effect to synchronize currentUser with local storage
   useEffect(() => {
-    const checkTokenExpiry = () => {
-      if (isTokenExpired(token)) {
-        updateUser(null); // Kullanıcı bilgisini sıfırlayın
-        setToken(null); // Token'ı sıfırlayın
-        localStorage.removeItem("token"); // Yerel depolamadan token'ı kaldırın
-      } else {
-        // Token geçerli ise kullanıcı bilgisini güncelle
-        const decoded = jwtDecode(token);
-        setCurrentUser(decoded); // Eğer token geçerli ise kullanıcı bilgilerini ayarla
-      }
-    };
+    if (currentUser) {
+      localStorage.setItem("user", JSON.stringify(currentUser));
+    } else {
+      localStorage.removeItem("user");
+    }
+  }, [currentUser]);
 
-    // Token'ın geçerli olup olmadığını kontrol et
-    checkTokenExpiry();
-
-    // Belirli aralıklarla kontrol etmek için bir interval ayarlayın (örneğin, her 5 dakikada bir)
-    const interval = setInterval(checkTokenExpiry, 7 * 24 * 60 * 60 * 1000); // 1 haftada bir kontrol et
-
-    return () => clearInterval(interval); // Temizle
-  }, [token]);
-
+  // Provide context value
   return (
-    <AuthContext.Provider value={{ currentUser, token, updateUser, setToken }}>
+    <AuthContext.Provider value={{ currentUser, updateUser }}>
       {children}
     </AuthContext.Provider>
   );
