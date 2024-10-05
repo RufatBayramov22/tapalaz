@@ -29,43 +29,63 @@ export const register = async (req, res) => {
 };
 
 // LOGIN FUNCTION
+
 export const login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    // CHECK IF THE USER EXISTS
+    // KULLANICININ VAR OLUP OLMADIĞINI KONTROL ET
     const user = await User.findOne({ username });
 
     if (!user) return res.status(400).json({ message: "Invalid Credentials!" });
 
-    // CHECK IF THE PASSWORD IS CORRECT
+    // ŞİFRENİN DOĞRULUĞUNU KONTROL ET
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid)
       return res.status(400).json({ message: "Invalid Credentials!" });
 
     // Token'ı oluşturmak için gerekli süreyi tanımlayın
-    const age = 1000 * 60 * 60 * 24 * 7; // 7 gün
+    const accessTokenAge = 1000 * 60 * 60; // 1 saat
+    const refreshTokenAge = 1000 * 60 * 60 * 24 * 7; // 7 gün
 
-    // GENERATE COOKIE TOKEN AND SEND TO THE USER
-    const token = jwt.sign(
+    // Erişim token'ını oluştur
+    const accessToken = jwt.sign(
       {
         id: user._id,
         isAdmin: false,
       },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: age }
+      { expiresIn: accessTokenAge }
+    );
+
+    // Yenileme token'ını oluştur
+    const refreshToken = jwt.sign(
+      {
+        id: user._id,
+      },
+      process.env.JWT_REFRESH_SECRET_KEY, // Farklı bir secret key kullanmalısınız
+      { expiresIn: refreshTokenAge }
     );
 
     const { password: userPassword, ...userInfo } = user.toObject();
 
-    res.cookie("token", token, {
+    // Erişim token'ını cookie'ye yaz
+    res.cookie("token", accessToken, {
       httpOnly: true,
+      maxAge: accessTokenAge,
       // secure: true, // Eğer HTTPS kullanıyorsanız bu satırı açın
-      maxAge: age,
-    })
-    .status(200)
-    .json({ token, ...userInfo }); // Token'ı yanıtın içine ekliyoruz
+    });
+
+    // Yenileme token'ını cookie'ye yaz
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      maxAge: refreshTokenAge,
+      // secure: true, // Eğer HTTPS kullanıyorsanız bu satırı açın
+    });
+
+    // Kullanıcı bilgilerini ve erişim token'ını yanıtla
+    res.status(200).json({ token: accessToken, ...userInfo });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to login!" });

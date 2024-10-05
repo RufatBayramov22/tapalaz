@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Create an Axios instance
 const apiRequest = axios.create({
-  baseURL: "http://localhost:8800", // Replace with your API base URL
+  baseURL: "https://tapalaz-1-xzag.onrender.com", // Replace with your API base URL
   withCredentials: true, // Enables sending cookies with requests
 });
 
