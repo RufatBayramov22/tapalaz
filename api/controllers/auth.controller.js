@@ -53,7 +53,7 @@ export const login = async (req, res) => {
 
     // TOKEN OLUŞTUR VE KULLANICI BİLGİLERİYLE GÖNDER
     const token = jwt.sign(
-      { id: user._id, isAdmin: false },
+      { id: user._id, isAdmin: true },
       process.env.JWT_SECRET_KEY,
       { expiresIn: age }
     );

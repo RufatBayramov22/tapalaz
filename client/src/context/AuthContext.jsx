@@ -14,7 +14,6 @@ export const AuthContextProvider = ({ children }) => {
     setCurrentUser(data);
   };
 
-
   const isTokenExpired = (token) => {
     if (!token) return true; // Eğer token yoksa süresi dolmuş kabul et
     const decoded = jwtDecode(token); // jwt_decode yerine jwtDecode kullan
@@ -28,15 +27,18 @@ export const AuthContextProvider = ({ children }) => {
         updateUser(null); // Kullanıcı bilgisini sıfırlayın
         setToken(null); // Token'ı sıfırlayın
         localStorage.removeItem("token"); // Yerel depolamadan token'ı kaldırın
-    
+      } else {
+        // Token geçerli ise kullanıcı bilgisini güncelle
+        const decoded = jwtDecode(token);
+        setCurrentUser(decoded); // Eğer token geçerli ise kullanıcı bilgilerini ayarla
       }
     };
 
-    checkTokenExpiry(); // Token süresini kontrol et
+    // Token'ın geçerli olup olmadığını kontrol et
+    checkTokenExpiry();
 
     // Belirli aralıklarla kontrol etmek için bir interval ayarlayın (örneğin, her 5 dakikada bir)
     const interval = setInterval(checkTokenExpiry, 7 * 24 * 60 * 60 * 1000); // 1 haftada bir kontrol et
-
 
     return () => clearInterval(interval); // Temizle
   }, [token]);
