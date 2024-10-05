@@ -19,12 +19,13 @@ export const register = async (req, res) => {
 
     await newUser.save();
 
-    res.status(201).json({ message: "User created successfully" });
+    // GENERATE A TOKEN
+    const token = jwt.sign({ id: newUser._id }, JWT_SECRET, { expiresIn: '1h' });
+
+    res.status(201).json({ message: "User created successfully", token });
   } catch (err) {
-    console.error("Error details:", err); // Daha fazla bilgi için
-    res
-      .status(500)
-      .json({ message: "Failed to create user!", error: err.message });
+    console.error("Error details:", err);
+    res.status(500).json({ message: "Failed to create user!", error: err.message });
   }
 };
 

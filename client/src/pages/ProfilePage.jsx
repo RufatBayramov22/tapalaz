@@ -27,7 +27,7 @@ function ProfilePage() {
     }
   };
 
-  console.log(currentUser);
+  console.log("CurrentUser",currentUser);
   
 
   return (
