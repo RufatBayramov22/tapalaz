@@ -38,6 +38,8 @@ app.options("*", cors());
 app.use(express.json());
 app.use(cookieParser());
 
+// Yeni access token almak için
+
 // Routes
 app.use("/auth", authRoute);
 app.use("/posts", postRoute);
