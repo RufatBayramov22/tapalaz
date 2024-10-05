@@ -33,13 +33,16 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   const { username, password } = req.body;
 
+  // Gizli anahtarları konsola yazdır
+  console.log("JWT Secret Key:", process.env.JWT_SECRET_KEY);
+  console.log("JWT Refresh Secret Key:", process.env.JWT_REFRESH_SECRET_KEY);
+
   try {
     const user = await User.findOne({ username });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Şifreyi karşılaştır
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid password" });
@@ -47,15 +50,15 @@ export const login = async (req, res) => {
 
     // Token'ları oluştur
     const accessToken = jwt.sign(
-      { userId: user._id }, // MongoDB ObjectId'sini kullan
+      { userId: user._id },
       process.env.JWT_SECRET_KEY, // Gizli anahtar
-      { expiresIn: "1m" } // Access token süresi
+      { expiresIn: "1m" }
     );
 
     const refreshToken = jwt.sign(
-      { userId: user._id }, // MongoDB ObjectId'sini kullan
-      process.env.JWT_REFRESH_SECRET_KEY, // Refresh token için ayrı gizli anahtar
-      { expiresIn: "5m" } // Refresh token süresi
+      { userId: user._id },
+      process.env.JWT_REFRESH_SECRET_KEY, // Refresh token için gizli anahtar
+      { expiresIn: "5m" }
     );
 
     // Token'ları cookie olarak ayarla
@@ -69,12 +72,12 @@ export const login = async (req, res) => {
         username: user.username,
         phoneNumber: user.phoneNumber
       },
-      accessToken, // Yeni access token
-      refreshToken // Yeni refresh token
+      accessToken,
+      refreshToken
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "An error occurred" });
+    console.error("Login error:", err);
+    res.status(500).json({ message: "An error occurred", error: err.message });
   }
 };
 // export const login = async (req, res) => {
