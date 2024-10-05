@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 // Yetkilendirme Middleware
 export const authMiddleware = (req, res, next) => {
   const token = req.cookies.token; // Token'ı cookie'den al
-
+  console.log(req.cookies.token)
   
   if (!token) {
     return res.status(401).json({ message: 'No token provided, authorization denied' });
