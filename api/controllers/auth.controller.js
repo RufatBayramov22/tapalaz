@@ -36,7 +36,7 @@ export const login = async (req, res) => {
   try {
     // CHECK IF THE USER EXISTS
 
-    const user = User.findUnique({
+    const user = await User.findOne({
       where: { username },
     });
 
