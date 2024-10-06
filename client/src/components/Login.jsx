@@ -23,25 +23,24 @@ function Login() {
   
       // Access token'ı kontrol et
       const accessToken = response.data.accessToken;
-      
+  
       if (accessToken) {
+        // Axios default header'ı ayarla
         axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+  
+        // Access token'ı localStorage'a kaydet
+        localStorage.setItem("token", accessToken);
+        console.log(localStorage.getItem("token"));
+  
+        // Kullanıcı bilgilerini güncelle
+        if (response.data.user) {
+          updateUser(response.data.user);
+        }
+  
+        navigate("/"); // Ana sayfaya yönlendir
       } else {
         throw new Error("Access Token not found in the response.");
       }
-  
-      console.log(response.data); // Yanıtı kontrol et
-  
-      // Access token'ı localStorage'a kaydet
-      localStorage.setItem("token", accessToken); 
-      console.log(localStorage.getItem("token"));
-  
-      // Kullanıcı bilgilerini güncelle
-      if (response.data.user) {
-        updateUser(response.data.user);
-      }
-  
-      navigate("/"); // Ana sayfaya yönlendir
     } catch (err) {
       console.error(err);
       setError(err.response ? err.response.data.message : "Bir hata oluştu!");

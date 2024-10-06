@@ -1,21 +1,22 @@
 import Chat from "../components/Chat";
 import List from "../pages/List";
-import { Await, Link, useLoaderData } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { Suspense, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import MobileNavBar from "../components/MobileNavbar";
 import Noavatar from "../assets/images/noavatar.jpeg";
 import apiRequest from "../lib/apiRequest";
 import { useTranslation } from "react-i18next";
 
-
 function ProfilePage() {
-  const data = useLoaderData();
   const navigate = useNavigate();
-
   const { updateUser, currentUser } = useContext(AuthContext);
   const { t } = useTranslation();
+  
+  // Posts state'ini tanımlayın
+  const [posts, setPosts] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true); // Yükleme durumu
 
   const handleLogout = async () => {
     try {
@@ -27,8 +28,27 @@ function ProfilePage() {
     }
   };
 
-  console.log("CurrentUser",currentUser);
-  
+  // Profile posts verisini almak için useEffect kullanın
+  useEffect(() => {
+    const fetchProfilePosts = async () => {
+      const accessToken = localStorage.getItem("accessToken"); // Token'ı localStorage'dan al
+      try {
+        const response = await apiRequest.get("/users/profilePosts", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        setPosts(response.data.userPosts); // Başarılı yanıtı state'e ata
+      } catch (error) {
+        console.error('Error fetching profile posts:', error);
+        setError(error.response?.data?.message || 'Bir hata oluştu'); // Hata mesajını state'e ata
+      } finally {
+        setLoading(false); // Yükleme tamamlandığında
+      }
+    };
+
+    fetchProfilePosts(); // Fonksiyonu çağır
+  }, []); // Boş bağımlılık dizisi, bileşen ilk yüklendiğinde çalışır
 
   return (
     <div className="profilePage">
@@ -56,14 +76,14 @@ function ProfilePage() {
               <button className="addNewBtn">{t("addNew")}</button>
             </Link>
           </div>
-          <Suspense fallback={<p>Loading....</p>}>
-            <Await
-              resolve={data.postResponse}
-              errorElement={<p>Error loading posts!</p>}
-            >
-              {(postResponse) => <List posts={postResponse.data.userPosts} />}
-            </Await>
-          </Suspense>
+
+          {loading ? ( // Yükleniyorsa
+            <p>Loading....</p>
+          ) : error ? ( // Hata varsa
+            <p>Error loading posts: {error}</p>
+          ) : ( // Başarılıysa
+            <List posts={posts} />
+          )}
         </div>
       </div>
       <div className="chatContainer">
