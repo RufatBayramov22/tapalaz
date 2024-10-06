@@ -17,11 +17,26 @@ export const profilePageLoader = async (userId) => {
   if (!userId) {
     throw new Error('User ID is required');
   }
-  const postPromise = apiRequest(`users/profilePosts`);
-  return defer({
-    postResponse: postPromise,
+
+  // LocalStorage'dan accessToken'ı al
+  const accessToken = localStorage.getItem("token");
+  if (!accessToken) {
+    throw new Error('Access token is required');
+  }
+
+  // Access token'ı Authorization başlığına ekle
+  const postPromise = apiRequest.get(`users/profilePosts`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`, // Token'ı buraya ekliyoruz
+    },
   });
+console.log(accessToken);
+
+  return {
+    postResponse: postPromise,
+  };
 };
+
 
 
 

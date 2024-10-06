@@ -61,9 +61,21 @@ export const login = async (req, res) => {
       { expiresIn: "5m" }
     );
 
-    // Token'ları cookie olarak ayarla
-    res.cookie("accessToken", accessToken, { maxAge: 60000, httpOnly: true });
-    res.cookie("refreshToken", refreshToken, { maxAge: 300000, httpOnly: true, secure: true, sameSite: "strict" });
+// Token'ları cookie olarak ayarla
+res.cookie("accessToken", accessToken, {
+  maxAge: 60000, 
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production", // Sadece production'da secure olacak
+  sameSite: "lax" // Lax ya da strict kullanılabilir
+});
+
+res.cookie("refreshToken", refreshToken, {
+  maxAge: 300000, 
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production", // Sadece production'da secure olacak
+  sameSite: "lax" // Lax ya da strict kullanılabilir
+});
+
 
     // Kullanıcı bilgilerini ve token'ları döndür
     res.json({

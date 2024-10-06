@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import apiRequest from "../lib/apiRequest";
 import { t } from "i18next";
+import axios from "axios";
 
 function Login() {
   const { updateUser } = useContext(AuthContext);
@@ -15,27 +16,35 @@ function Login() {
     e.preventDefault();
   
     try {
-      const res = await apiRequest.post("/auth/login", {
+      const response = await axios.post("https://tapalaz-1-xzag.onrender.com/auth/login", {
         username,
         password,
-      });
+      }, { withCredentials: true });
   
-      console.log(res.data); // Yanıtı kontrol et
+      // Access token'ı kontrol et
+      const accessToken = response.data.accessToken;
+      
+      if (accessToken) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+      } else {
+        throw new Error("Access Token not found in the response.");
+      }
+  
+      console.log(response.data); // Yanıtı kontrol et
+  
+      // Access token'ı localStorage'a kaydet
+      localStorage.setItem("token", accessToken); 
+      console.log(localStorage.getItem("token"));
   
       // Kullanıcı bilgilerini güncelle
-      if (res.data.user) {
-        updateUser(res.data.user);
-        localStorage.setItem("token", res.data.accessToken); // Access token'ı localStorage'a kaydet
-        // Eğer refresh token'ı da saklamak isterseniz, onu da burada saklayabilirsiniz.
-        // localStorage.setItem("refreshToken", res.data.refreshToken);
-      } else {
-        throw new Error("User data not found in response");
+      if (response.data.user) {
+        updateUser(response.data.user);
       }
   
       navigate("/"); // Ana sayfaya yönlendir
     } catch (err) {
       console.error(err);
-      setError(err.response ? err.response.data.message : "An error occurred!");
+      setError(err.response ? err.response.data.message : "Bir hata oluştu!");
     }
   };
   
