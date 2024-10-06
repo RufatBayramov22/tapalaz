@@ -30,106 +30,48 @@ export const register = async (req, res) => {
 
 // LOGIN FUNCTION
 
+
 export const login = async (req, res) => {
   const { username, password } = req.body;
 
-  // Gizli anahtarları konsola yazdır
-  console.log("JWT Secret Key:", process.env.JWT_SECRET_KEY);
-  console.log("JWT Refresh Secret Key:", process.env.JWT_REFRESH_SECRET_KEY);
-
   try {
     const user = await User.findOne({ username });
+
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(400).json({ message: "Invalid Credentials!" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
+
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid password" });
+      return res.status(400).json({ message: "Invalid Credentials!" });
     }
 
-    // Token'ları oluştur
-    const accessToken = jwt.sign(
-      { userId: user._id },
-      process.env.JWT_SECRET_KEY, // Gizli anahtar
-      { expiresIn: "1m" }
-    );
+    const age = 1000 * 60 * 60 * 24 * 7; // Token expiration set for 7 days
 
-    const refreshToken = jwt.sign(
-      { userId: user._id },
-      process.env.JWT_REFRESH_SECRET_KEY, // Refresh token için gizli anahtar
-      { expiresIn: "5m" }
-    );
-
-// Token'ları cookie olarak ayarla
-res.cookie("accessToken", accessToken, {
-  maxAge: 60000, 
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production", // Sadece production'da secure olacak
-  sameSite: "lax" // Lax ya da strict kullanılabilir
-});
-
-res.cookie("refreshToken", refreshToken, {
-  maxAge: 300000, 
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production", // Sadece production'da secure olacak
-  sameSite: "lax" // Lax ya da strict kullanılabilir
-});
-
-
-    // Kullanıcı bilgilerini ve token'ları döndür
-    res.json({
-      message: "Login Successful",
-      user: {
-        username: user.username,
-        phoneNumber: user.phoneNumber
+    // Create the token
+    const token = jwt.sign(
+      {
+        id: user._id,
+        isAdmin: false,
       },
-      accessToken,
-      refreshToken
-    });
+      process.env.JWT_SECRET_KEY, // Secret key
+      { expiresIn: age }
+    );
+
+    const { password: userPassword, ...userInfo } = user.toObject(); // Exclude password
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: age,
+    })
+    .status(200)
+    .json({ token, ...userInfo }); // Respond with token and user info
   } catch (err) {
-    console.error("Login error:", err);
-    res.status(500).json({ message: "An error occurred", error: err.message });
+    console.error(err);
+    res.status(500).json({ message: "Failed to login!" });
   }
 };
-// export const login = async (req, res) => {
-//   const { username, password } = req.body;
-
-//   try {
-//     const user = await User.findOne({ username });
-
-//     if (!user) return res.status(400).json({ message: "Invalid Credentials!" });
-
-//     const isPasswordValid = await bcrypt.compare(password, user.password);
-
-//     if (!isPasswordValid)
-//       return res.status(400).json({ message: "Invalid Credentials!" });
-
-//     const age = 1000 * 60 * 60 * 24 * 7; // 7 gün
-
-//     // Token'ı oluştur
-//     const token = jwt.sign(
-//       {
-//         id: user._id,
-//         isAdmin: false,
-//       },
-//       process.env.JWT_SECRET_KEY, // Gizli anahtar
-//       { expiresIn: age }
-//     );
-
-//     const { password: userPassword, ...userInfo } = user.toObject();
-
-//     res.cookie("token", token, {
-//       httpOnly: true,
-//       maxAge: age,
-//     })
-//     .status(200)
-//     .json({ token, ...userInfo });
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json({ message: "Failed to login!" });
-//   }
-// };
 // LOGOUT FUNCTION
 export const logout = (req, res) => {
   res.clearCookie("token").status(200).json({ message: "Logout Successful" });

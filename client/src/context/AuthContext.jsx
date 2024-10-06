@@ -9,14 +9,16 @@ export const AuthContextProvider = ({ children }) => {
 
   const updateUser = (data) => {
     setCurrentUser(data);
+    console.log("User updated:", data); // Güncellenen kullanıcı verisi
   };
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(currentUser));
+    console.log("LocalStorage updated:", currentUser); // LocalStorage güncellemesi
   }, [currentUser]);
 
   return (
-    <AuthContext.Provider value={{ currentUser,updateUser }}>
+    <AuthContext.Provider value={{ currentUser, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

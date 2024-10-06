@@ -1,52 +1,39 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import apiRequest from "../lib/apiRequest";
+import apiRequest from "../lib/apiRequest"; // apiRequest'ı içe aktar
 import { t } from "i18next";
-import axios from "axios";
 
 function Login() {
   const { updateUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // Hata mesajı için durum ekle
+  const [error, setError] = useState(""); // Hata mesajı durumu
+  const [isLoading, setIsLoading] = useState(false); // Yükleniyor durumu
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    setIsLoading(true); // Yükleniyor durumunu başlat
+
     try {
-      const response = await axios.post("https://tapalaz-1-xzag.onrender.com/auth/login", {
+      const res = await apiRequest.post("/auth/login", {
         username,
         password,
-      }, { withCredentials: true });
-  
-      // Access token'ı kontrol et
-      const accessToken = response.data.accessToken;
-  
-      if (accessToken) {
-        // Axios default header'ı ayarla
-        axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-  
-        // Access token'ı localStorage'a kaydet
-        localStorage.setItem("token", accessToken);
-        console.log(localStorage.getItem("token"));
-  
-        // Kullanıcı bilgilerini güncelle
-        if (response.data.user) {
-          updateUser(response.data.user);
-        }
-  
-        navigate("/"); // Ana sayfaya yönlendir
-      } else {
-        throw new Error("Access Token not found in the response.");
-      }
+      });
+
+      // Kullanıcı bilgilerini güncelle
+      updateUser(res.data);
+
+      // Ana sayfaya yönlendir
+      navigate("/");
     } catch (err) {
-      console.error(err);
+      console.error("Giriş hatası:", err); // Hata mesajını konsola yazdır
       setError(err.response ? err.response.data.message : "Bir hata oluştu!");
+    } finally {
+      setIsLoading(false); // Yükleniyor durumunu sonlandır
     }
   };
-  
 
   return (
     <div className="loginPage">
@@ -58,14 +45,18 @@ function Login() {
             type="text"
             placeholder={t("username")}
             onChange={(e) => setUsername(e.target.value)}
+            required
           />
           <input
             name="password"
             type="password"
             placeholder={t("password")}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
-          <button type="submit">{t("login")}</button>
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? t("loading") : t("login")}
+          </button>
 
           {error && <span>{error}</span>} {/* Hata mesajını göster */}
 
