@@ -68,9 +68,8 @@ export const login = async (req, res) => {
     res
       .cookie("token", token, {
         httpOnly: true, // Tarayıcıda yalnızca HTTP istekleriyle erişilebilir
-        secure: process.env.NODE_ENV === "production", // Üretimde yalnızca HTTPS üzerinden kullanılacak
-        maxAge: age * 1000, // Cookie geçerlilik süresi (milisaniye cinsinden)
-        sameSite: "strict", // CSRF saldırılarına karşı güvenlik
+        secure:true,
+        maxAge: age, // Cookie geçerlilik süresi (milisaniye cinsinden)
       })
       .status(200)
       .json({ token, ...userInfo }); // Kullanıcı bilgilerini ve token'ı döndür

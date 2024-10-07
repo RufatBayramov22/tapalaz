@@ -1,9 +1,9 @@
 import { defer } from "react-router-dom";
 import apiRequest from "./apiRequest";
 
-export const singlePageLoader = async ({ params }) => {
-  const res = await apiRequest("posts/" + params.id);
-  return res.data;
+export const singlePageLoader = async ({  params }) => {
+    const res = await apiRequest("posts/" + params.id);
+    return res.data;
 };
 
 export const listPageLoader = async ({ request }) => {
@@ -15,14 +15,17 @@ export const listPageLoader = async ({ request }) => {
 };
 export const profilePageLoader = async (userId) => {
   if (!userId) {
-    throw new Error("User ID is required");
+    throw new Error('User ID is required');
   }
-  const postPromise = apiRequest(`users/profilePosts`);
-
+  
+  const postPromise = apiRequest.get(`users/profilePosts`); 
   return {
     postResponse: postPromise,
   };
 };
+
+
+
 
 export const postLoader = async ({ params }) => {
   try {
@@ -34,3 +37,5 @@ export const postLoader = async ({ params }) => {
     return { post: null, error: "Post not found" };
   }
 };
+
+

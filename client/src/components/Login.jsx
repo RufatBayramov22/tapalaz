@@ -15,16 +15,17 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true); // Yükleniyor durumunu başlat
-
+  
     try {
-      const res = await apiRequest.post("/auth/login", {
-        username,
-        password,
-      });
-
+      const res = await apiRequest.post(
+        "/auth/login",
+        { username, password },
+        { withCredentials: true } // Çerezlerle birlikte isteği gönder
+      );
+  
       // Kullanıcı bilgilerini güncelle
       updateUser(res.data);
-
+  
       // Ana sayfaya yönlendir
       navigate("/");
     } catch (err) {
@@ -34,6 +35,7 @@ function Login() {
       setIsLoading(false); // Yükleniyor durumunu sonlandır
     }
   };
+  
 
   return (
     <div className="loginPage">
