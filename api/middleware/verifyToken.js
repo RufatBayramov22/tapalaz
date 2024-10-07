@@ -1,4 +1,7 @@
-const authMiddleware = (req, res, next) => {
+import jwt from "jsonwebtoken";
+
+// Authorization Middleware
+export const authMiddleware = (req, res, next) => {
   const token = req.cookies.token; // Cookie'den token al
 
   if (!token) {
