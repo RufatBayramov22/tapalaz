@@ -21,11 +21,11 @@ function Login() {
         "/auth/login",
         { username, password },
         {
-          headers: {
-            Authorization: `Bearer ${await JSON.parse(
-              localStorage.getItem("user")
-            )?.token}`,
-          },
+          // headers: {
+          //   Authorization: `Bearer ${await JSON.parse(
+          //     localStorage.getItem("user")
+          //   )?.token}`,
+          // },
           withCredentials: true, // Çerezlerle birlikte isteği gönder
         }
       );

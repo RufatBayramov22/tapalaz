@@ -15,19 +15,40 @@ export const listPageLoader = async ({ request }) => {
 };
 
 
-
-
-export const profilePageLoader = async (userId) => {
-  if (!userId) {
-    throw new Error('User ID is required');
-  }
+// export const profilePageLoader = async (userId) => {
+//   if (!userId) {
+//     throw new Error('User ID is required');
+//   }
   
-  const postPromise = apiRequest.get(`users/profilePosts`); 
+//   const postPromise = apiRequest.get(`users/profilePosts`); 
+//   return {
+//     postResponse: postPromise,
+//   };
+// }; 
+
+// Intercept requests to add the Authorization header
+apiRequest.interceptors.request.use((config) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = user?.token;
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`; // Add token to Authorization header
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
+
+// Call to the profilePosts endpoint
+export const profilePageLoader = async () => {
+  const postPromise = apiRequest.get("users/profilePosts", {
+    withCredentials: true, // Ensure cookies are sent with the request
+  });
+
   return {
     postResponse: postPromise,
   };
 };
-
 
 
 

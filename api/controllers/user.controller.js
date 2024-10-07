@@ -142,9 +142,11 @@ export const getSavedPosts = async (req, res) => {
 
 
 
-
 export const profilePosts = async (req, res) => {
   const tokenUserId = req.userId;
+
+  // Log user ID to confirm it's set
+  console.log("User ID from token:", tokenUserId);
 
   if (!tokenUserId) {
     return res.status(400).json({ message: "Kullanıcı kimliği eksik" });
