@@ -14,36 +14,34 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-  
+    setIsLoading(true); // Yükleniyor durumunu başlat
+
     try {
       const res = await apiRequest.post(
         "/auth/login",
         { username, password },
         {
+          headers: {
+            Authorization: `Bearer ${await JSON.parse(
+              localStorage.getItem("user")
+            )?.token}`,
+          },
           withCredentials: true, // Çerezlerle birlikte isteği gönder
         }
       );
-  
-      // Login başarılı ise token ve kullanıcı bilgilerini al
-      const { token, ...userInfo } = res.data;
-  
-      // Kullanıcı bilgilerini ve token'ı localStorage'a kaydet
-      localStorage.setItem("user", JSON.stringify({ token, ...userInfo }));
-  
-      // currentUser'ı güncelle
-      updateUser({ token, ...userInfo });
-  
+
+      // Kullanıcı bilgilerini güncelle
+      updateUser(res.data);
+
       // Ana sayfaya yönlendir
       navigate("/");
     } catch (err) {
-      console.error("Giriş hatası:", err);
+      console.error("Giriş hatası:", err); // Hata mesajını konsola yazdır
       setError(err.response ? err.response.data.message : "Bir hata oluştu!");
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); // Yükleniyor durumunu sonlandır
     }
   };
-  
 
   return (
     <div className="loginPage">
