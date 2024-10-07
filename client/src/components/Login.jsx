@@ -14,25 +14,33 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true); // Yükleniyor durumunu başlat
+    setIsLoading(true);
   
     try {
       const res = await apiRequest.post(
         "/auth/login",
         { username, password },
-        { withCredentials: true } // Çerezlerle birlikte isteği gönder
+        {
+          withCredentials: true, // Çerezlerle birlikte isteği gönder
+        }
       );
   
-      // Kullanıcı bilgilerini güncelle
-      updateUser(res.data);
+      // Login başarılı ise token ve kullanıcı bilgilerini al
+      const { token, ...userInfo } = res.data;
+  
+      // Kullanıcı bilgilerini ve token'ı localStorage'a kaydet
+      localStorage.setItem("user", JSON.stringify({ token, ...userInfo }));
+  
+      // currentUser'ı güncelle
+      updateUser({ token, ...userInfo });
   
       // Ana sayfaya yönlendir
       navigate("/");
     } catch (err) {
-      console.error("Giriş hatası:", err); // Hata mesajını konsola yazdır
+      console.error("Giriş hatası:", err);
       setError(err.response ? err.response.data.message : "Bir hata oluştu!");
     } finally {
-      setIsLoading(false); // Yükleniyor durumunu sonlandır
+      setIsLoading(false);
     }
   };
   
@@ -59,9 +67,7 @@ function Login() {
           <button type="submit" disabled={isLoading}>
             {isLoading ? t("loading") : t("login")}
           </button>
-
           {error && <span>{error}</span>} {/* Hata mesajını göster */}
-
           <Link to="/register">{t("dontHave")}</Link>
         </form>
       </div>

@@ -55,10 +55,10 @@ export const login = async (req, res) => {
     const token = jwt.sign(
       {
         id: user._id,
-        isAdmin: user.isAdmin || false, // Kullanıcının admin olup olmadığını belirle
+        isAdmin: user.isAdmin || false,
       },
-      process.env.JWT_SECRET_KEY, // JWT için gizli anahtar
-      { expiresIn: age } // Token geçerlilik süresi
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: age }
     );
 
     // Şifreyi kullanıcı bilgisinden hariç tut
@@ -68,8 +68,8 @@ export const login = async (req, res) => {
     res
       .cookie("token", token, {
         httpOnly: true, // Tarayıcıda yalnızca HTTP istekleriyle erişilebilir
-        secure:true,
-        maxAge: age, // Cookie geçerlilik süresi (milisaniye cinsinden)
+        secure: true, // HTTPS üzerinden kullanılacak
+        maxAge: age * 1000, // Cookie geçerlilik süresi (milisaniye cinsinden)
       })
       .status(200)
       .json({ token, ...userInfo }); // Kullanıcı bilgilerini ve token'ı döndür
@@ -79,6 +79,7 @@ export const login = async (req, res) => {
     res.status(500).json({ message: "Failed to login!" });
   }
 };
+
 
 // LOGOUT FUNCTION
 export const logout = (req, res) => {
