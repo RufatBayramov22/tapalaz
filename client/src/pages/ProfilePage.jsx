@@ -50,6 +50,7 @@ function ProfilePage() {
             </span>
             <button onClick={handleLogout}>{t("logOut")}</button>
           </div>
+          
           <div className="title">
             <h1 className="myProductsTitle">{t("myProducts")}</h1>
             <Link to="/add" className="addnewLink">

@@ -115,7 +115,7 @@ export const addPost = async (req, res) => {
     });
 
     // Dinamik alanları kontrol et
-    const dynamicFields = ['engineSize', 'mileage', 'floorNumber', 'roomCount', 'brand', 'model', 'experience', 'author', 'genre', 'breed', 'age', 'carAccessory', 'truckLoadCapacity', 'registerNumber', 'waterTransport', 'jobType'];
+    const dynamicFields = ['engineSize', 'mileage', 'floorNumber', 'roomCount', 'brand', 'model', 'experience', 'author', 'genre', 'breed', 'age', 'carAccessory', 'truckLoadCapacity', 'registerNumber', 'waterTransport', 'jobType',"rentOrSale"];
 
     dynamicFields.forEach(field => {
       if (body.postData[field] !== undefined) {

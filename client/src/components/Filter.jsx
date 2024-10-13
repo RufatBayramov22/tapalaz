@@ -267,73 +267,71 @@ function Filter({ onFilter }) {
             }}
             value={query.type}
           >
-            <option value="">{t("categorySelect")}</option>
-            <optgroup label="Daşınmaz Əmlak">
-              <option value="Mənzillər">{t("apartments")}</option>
-              <option value="Villalar">{t("villas")}</option>
-              <option value="Torpaq">{t("land")}</option>
-              <option value="Obyekt">{t("office")}</option>
-              <option value="Garage">{t("garage")}</option>
-            </optgroup>
-            <optgroup label="Nəqliyyat">
-              <option value="Avtomobiller">{t("vehicles")}</option>
-              <option value="Su Nəqliyyatı">{t("waterTransport")}</option>
-              <option value="Avtobuslar">{t("bus")}</option>
-              <option value="Motorcycle">{t("motorcycle")}</option>
-              <option value="Qeydiyyat Nişanları">
-                {t("registrationBadges")}
-              </option>
-              <option value="Bicycle">{t("bicycle")}</option>
-            </optgroup>
-            <optgroup label="Elektronika">
-              <option value="Phone">{t("phone")}</option>
-              <option value="Laptop">{t("laptop")}</option>
-              <option value="Tablet">{t("tablet")}</option>
-              <option value="Simcard">{t("numbersSimCard")}</option>
-              <option value="Kompyuter">Masaustu-Komputerler</option>
-              <option value="Smart-watch">{t("smartWatch")}</option>
-            </optgroup>
-            <optgroup label="Ehtiyat hissələri">
-              <option value="Car Parts">{t("carParts")}</option>
-              <option value="Bike Parts">{t("bikeParts")}</option>
-            </optgroup>
-            <optgroup label="Xidmətlər və Biznes">
-              <option value="Avadanlıq">{t("rentalOfequipment")}</option>
-              <option value="Biznes">{t("equipmentBiznes")}</option>
-              <option value="Dayələr">{t("nannies")}</option>
-              <option value="Foto">{t("photos")}</option>
-              <option value="Gözəllik">{t("beauty")}</option>
-              <option value="IT">{t("it")}</option>
-              <option value="Logistika">{t("logistcs")}</option>
-              <option value="Təmizlik">{t("clean")}</option>
-              <option value="Tərcümə">{t("translation")}</option>
-              <option value="Tibbi Xidmətlər">{t("medical")}</option>
-            </optgroup>
-            <optgroup label="Şəxsi Əşyalar">
-              <option value="Clothing">{t("clothing")}</option>
-              <option value="Accessories">{t("accessories")}</option>
-            </optgroup>
-            <optgroup label="Hobbi">
-              <option value="Books">{t("books")}</option>
-              <option value="Sports">{t("sports")}</option>
-            </optgroup>
-            <optgroup label="Uşaq aləmi">
-              <option value="Toys">{t("toys")}</option>
-              <option value="Clothes">{t("clothing")}</option>
-            </optgroup>
-
-            <optgroup label="İş Elanları">
-              <option value="Full-time">Full-time</option>
-              <option value="Part-time">Part-time</option>
-              <option value="Freelance">Freelance</option>
-            </optgroup>
-            <optgroup label="Heyvanlar">
-              <option value="Dogs">{t("dogs")}</option>
-              <option value="Cats">{t("cats")}</option>
-              <option value="Birds">{t("birds")}</option>
-              <option value="Fish">{t("fish")}</option>
-              <option value="Horses">{t("horses")}</option>
-            </optgroup>
+       <option value="">{t("categorySelect")}</option>
+                <optgroup label="Daşınmaz Əmlak">
+                  <option value="Mənzillər">{t("apartments")}</option>
+                  <option value="Villalar">{t("villas")}</option>
+                  <option value="Torpaq">{t("land")}</option>
+                  <option value="Obyekt">{t("office")}</option>
+                  <option value="Qaraj">{t("garage")}</option>
+                </optgroup>
+                <optgroup label="Nəqliyyat">
+                  <option value="Avtomobiller">{t("vehicles")}</option>
+                  <option value="Su Nəqliyyatı">{t("waterTransport")}</option>
+                  <option value="Avtobuslar">{t("bus")}</option>
+                  <option value="Motosiklet">{t("motorcycle")}</option>
+                  <option value="Qeydiyyat Nişanları">{t("registrationBadges")}</option>
+                  <option value="Velosiped">{t("bicycle")}</option>
+                </optgroup>
+                <optgroup label="Elektronika">
+                  <option value="Telefon">{t("phone")}</option>
+                  <option value="Noutbuk">{t("laptop")}</option>
+                  <option value="Tablet">{t("tablet")}</option>
+                  <option value="Simcard">{t("numbersSimCard")}</option>
+                  <option value="Kompyuter">Masaustu-Komputerler</option>
+                  <option value="Smart-watch">{t("smartWatch")}</option>
+                </optgroup>
+                <optgroup label="Ehtiyat hissələri">
+                  <option value="Ehtiyyat hissələri">{t("carParts")}</option>
+                  <option value="Velosiped hissələri">{t("bikeParts")}</option>
+                </optgroup>
+                <optgroup label="Xidmətlər və Biznes">
+                  <option value="Avadanlıq">{t("rentalOfequipment")}</option>
+                  <option value="Biznes">{t("equipmentBiznes")}</option>
+                  <option value="Dayələr">{t("nannies")}</option>
+                  <option value="Foto">{t("photos")}</option>
+                  <option value="Gözəllik">{t("beauty")}</option>
+                  <option value="IT">{t("it")}</option>
+                  <option value="Logistika">{t("logistcs")}</option>
+                  <option value="Təmizlik">{t("clean")}</option>
+                  <option value="Tərcümə">{t("translation")}</option>
+                  <option value="Tibbi Xidmətlər">{t("medical")}</option>
+                </optgroup>
+                <optgroup label="Şəxsi Əşyalar">
+                  <option value="Paltar">{t("clothing")}</option>
+                  <option value="Aksesuar">{t("accessories")}</option>
+                </optgroup>
+                <optgroup label="Hobbi">
+                  <option value="Kitablar">{t("books")}</option>
+                  <option value="Sports">{t("sports")}</option>
+                </optgroup>
+                <optgroup label="Uşaq aləmi">
+                  <option value="Oyuncaqlar">{t("toys")}</option>
+                  <option value="Uşaq Paltarı">{t("clothing")}</option>
+                </optgroup>
+         
+                <optgroup label="İş Elanları">
+                  <option value="Full-time">Full-time</option>
+                  <option value="Part-time">Part-time</option>
+                  <option value="Freelance">Freelance</option>
+                </optgroup>
+                <optgroup label="Heyvanlar">
+                  <option value="İtlər">{t("dogs")}</option>
+                  <option value="Pişiklər">{t("cats")}</option>
+                  <option value="Quşlar">{t("birds")}</option>
+                  <option value="Balıq">{t("fish")}</option>
+                  <option value="Atlar">{t("horses")}</option>
+                </optgroup>
           </select>
         </div>
         <div className="item">
@@ -542,9 +540,9 @@ function Filter({ onFilter }) {
                 onChange={handleChange}
                 required
               >
-                <option value="">{t("select")}</option>
-                <option value="Rent">{t("rent")}</option>
-                <option value="Sale">{t("sale")}</option>
+            <option value="">{t("select")}</option>
+                    <option value="Kirə">{t("rent")}</option>
+                    <option value="Satılır">{t("sale")}</option>
               </select>
             </div>
           </>
@@ -577,8 +575,8 @@ function Filter({ onFilter }) {
                 required
               >
                 <option value="">{t("select")}</option>
-                <option value="Rent">{t("rent")}</option>
-                <option value="Sale">{t("sale")}</option>
+                    <option value="Kirə">{t("rent")}</option>
+                    <option value="Satılır">{t("sale")}</option>
               </select>
             </div>
             <div className="item">

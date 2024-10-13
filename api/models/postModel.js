@@ -9,14 +9,14 @@ const postSchema = new Schema({
   type: {
     type: String,
     enum: [
-      'Sedan', 'SUV', 'Truck', 'Motorcycle', 'Phone', 'Laptop', 'Tablet',
-      'Car Parts', 'Bike Parts', 'Plumbing', 'Electrical', 'Cleaning',
-      'Clothing', 'Accessories', 'Books', 'Sports', 'Toys', 'Clothes',
-      'Apartment', 'House', 'Garage', 'Land', 'Full-time', 'Part-time', 'Freelance',
-      'Dogs', 'Cats', 'Birds', 'Su', 'Avtobuslar', 'Qeydiyyat Nişanları', 'Simcard',
+      'Sedan', 'SUV', 'Truck', 'Motosiklet', 'Telefon', 'Noutbuk', 'Tablet',
+      'Ehtiyyat hissələri', 'Velosiped hissələri', 'Plumbing', 'Electrical', 'Cleaning',
+      'Paltar', 'Aksesuar', 'Kitablar', 'Sports', 'Oyuncaqlar', 'Uşaq Paltarı',
+      'Apartment', 'House', 'Qaraj', 'Land', 'Full-time', 'Part-time', 'Freelance',
+      'İtlər', 'Pişiklər', 'Quşlar', 'Su', 'Avtobuslar', 'Qeydiyyat Nişanları', 'Simcard',
       'Kompyuter', 'Smart-watch', 'Avadanlıq', 'Biznes', 'Dayələr', 'Foto',
-      'Gözəllik', 'IT', 'Logistika', 'Təmizlik', 'Tərcümə', 'Tibbi Xidmətlər', 'Fish', 'Horses',
-      'Avtomobiller', 'Car Parts', 'Yük maşınları', 'Mənzillər', 'Villalar', 'Torpaq', 'Office', 'Garage',"Bicycle"
+      'Gözəllik', 'IT', 'Logistika', 'Təmizlik', 'Tərcümə', 'Tibbi Xidmətlər', 'Balıq', 'Atlar',
+      'Avtomobiller',  'Yük maşınları', 'Mənzillər', 'Villalar', 'Torpaq', 'Office', 'Garage',"Velosiped"
     ],
     required: true
   },
@@ -59,8 +59,8 @@ const postSchema = new Schema({
   // },
   rentOrSale: { // Satılık mı, kiralık mı
     type: String,
-    enum: ['Rent', 'Sale'],
-    default: 'Sale'
+    enum: ['Kirə', 'Satılır'],
+    default: 'Satılır'
   },
   emlakinNovu: {
     type: String,

@@ -110,7 +110,8 @@ i18n
           createAcc:"Create a Account",
           haveAcc:"Do you have an account?",
           delete:"delete",
-          uploadImage:"Upload Image"
+          uploadImage:"Upload Image",
+          submit:"Add new Ads"
         },
       },
       az: {
@@ -220,7 +221,8 @@ i18n
           createAcc:"Yeni hesab Yaradın",
           haveAcc:"Sizin hesabınız var?",
           delete:"sil",
-          uploadImage:"Şəkil Yükləyin"
+          uploadImage:"Şəkil Yükləyin",
+          submit:"Elan Yerləşdir"
         },
       },
       ru: {
@@ -328,7 +330,8 @@ i18n
           createAcc:"Создать новую учетную запись",
           haveAcc:"У вас есть учетная запись?",
           delete:"удалить",
-          uploadImage:"Загрузить изображение"
+          uploadImage:"Загрузить изображение",
+          submit:"Добавить новые объявления"
         },
       },
     },

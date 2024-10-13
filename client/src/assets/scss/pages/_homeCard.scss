@@ -67,6 +67,9 @@ svg {
 .text-body {
   font-size: .9em;
   padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 /* Button */
