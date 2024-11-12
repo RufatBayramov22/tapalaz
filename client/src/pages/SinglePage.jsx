@@ -7,6 +7,7 @@ import PinIcon from "../assets/images/pin.png";
 import SavedIcon from "../assets/images/save.png";
 import ChatIcon from "../assets/images/chat.png";
 import apiRequest from "../lib/apiRequest";
+import { t } from "i18next";
 
 function SinglePage() {
   const { post, error } = useLoaderData();
@@ -108,8 +109,8 @@ console.log(post);
       case "Mənzillər":
         return (
           <>
-            <p><strong>Mərtəbə:</strong> {post.floorNumber || "Məlumat yoxdur"}</p>
             <p><strong>Otaq Sayı:</strong> {post.roomCount || "Məlumat yoxdur"}</p>
+            <p><strong>Mərtəbə:</strong> {post.floorNumber || "Məlumat yoxdur"}</p>
             <p><strong>Ölçü:</strong> {post.area || "Məlumat yoxdur"} m²</p>
             <p><strong>Kira / Satış:</strong> {post.rentOrSale || "Məlumat yoxdur"}</p>
           </>
@@ -135,6 +136,16 @@ console.log(post);
           <Slider images={post.images} />
           <div className="info">
             <div className="top">
+            {post.userId && (
+                <div className="user-card">
+                  <img src={post.userId.avatar || "/default-avatar.png"} alt={post.userId.username || "İstifadəçi"} />
+                  <div className="user-details">
+                    <span>{post.userId.username || "Kullanıcı adı eksik"}</span>
+                    <p><strong>Adı:</strong> {post.userId.username || "Adı eksik"}</p>
+                    <p><strong>{t("phoneNumber")}</strong> {post.userId.phoneNumber || "Nomre Yoxdur"}</p>
+                  </div>
+                </div>
+              )}
               <div className="post">
                 <h1>{post.title || "Başlıq yoxdur"}</h1>
                 <div className="address">
@@ -147,16 +158,7 @@ console.log(post);
                   <span>Kategoriya: {post.type || "Kategoriya hakkında məlumat yoxdu"}</span>
                 </div>
               </div>
-              {post.userId && (
-                <div className="user-card">
-                  <img src={post.userId.avatar || "/default-avatar.png"} alt={post.userId.username || "İstifadəçi"} />
-                  <div className="user-details">
-                    <span>{post.userId.username || "Kullanıcı adı eksik"}</span>
-                    <p><strong>Adı:</strong> {post.userId.username || "Adı eksik"}</p>
-                    <p><strong>PhoneNumber:</strong> {post.userId.phoneNumber || "Nomre Yoxdur"}</p>
-                  </div>
-                </div>
-              )}
+   
             </div>
             <div
               className="bottom"
@@ -167,34 +169,7 @@ console.log(post);
           </div>
         </div>
       </div>
-      <div className="features">
-        <div className="wrapper">
-          {/* <p className="title">Genel</p> */}
-          {post.mainCategory !== 'Avtomobil' && post.mainCategory !== 'Yük maşınları' && post.mainCategory !== 'İş Elanları' && post.mainCategory !== 'Su Nəqliyyatı' && post.mainCategory !== 'Phone' && post.mainCategory !== 'Xidmet' && post.mainCategory !== 'Hobbi' && (
-            <div className="listVertical">
-              {post.carModel && <p><strong>Marka:</strong> {post.carModel}</p>}
-              {/* Diğer özellikler burada listelenebilir... */}
-            </div>
-          )}
-          {/* <p className="title">Konum</p>
-          <div className="buttons">
-            <button>
-              <img src={ChatIcon} alt="Chat icon" />
-              Mesaj Gönder
-            </button>
-            <button
-              onClick={handleSave}
-              style={{
-                backgroundColor: saved ? "red" : "white",
-                color: saved ? "white" : "black",
-              }}
-            >
-              <img src={SavedIcon} alt="Save icon" />
-              Kaydet
-            </button>
-          </div> */}
-        </div>
-      </div>
+      
     </div>
   );
 }

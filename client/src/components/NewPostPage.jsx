@@ -152,6 +152,10 @@ function NewPostPage() {
         <h1>{t("newAdd")}</h1>
         <div className="wrapper">
           <form onSubmit={handleSubmit}>
+          <div className="item">
+              <label htmlFor="title">{t("postTitle")}</label>
+              <input id="title" name="title" type="text" required />
+            </div>
             <div className="item">
               <label htmlFor="type">{t("type")}</label>
               <select name="type" onChange={handleCategoryChange} required>
@@ -459,6 +463,17 @@ function NewPostPage() {
                   />
                 </div>
                 <div className="item">
+                  <label htmlFor="area">Torpaq Sahəsi (m²)</label>
+                  <input
+                    id="field"
+                    name="field"
+                    type="number"
+                    value={additionalFields.field || ""}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="item">
                   <label htmlFor="roomCount">{t("roomCount")}</label>
                   <input
                     id="roomCount"
@@ -515,10 +530,6 @@ function NewPostPage() {
               </>
             )}
 
-            <div className="item">
-              <label htmlFor="title">{t("postTitle")}</label>
-              <input id="title" name="title" type="text" required />
-            </div>
             <div className="item">
               <label htmlFor="price">{t("price")}</label>
               <input id="price" name="price" type="number" required />

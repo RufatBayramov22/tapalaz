@@ -9,6 +9,7 @@
     height: 64px;
     gap: 5px;
     border-radius: 10px;
+    // display: none;
     .thing{
       width: 280px;
       outline: none;
@@ -81,6 +82,11 @@
         }
       
     }
+  }
+}
+@media (max-width:970px) {
+  form{
+    display: none !important;
   }
 }
 

@@ -601,6 +601,17 @@ function Filter({ onFilter }) {
                 required
               />
             </div>
+            <div className="item">
+              <label htmlFor="roomCount">Torpaq Sahesi</label>
+              <input
+                id="field"
+                name="field"
+                type="number"
+                value={query.field || ""}
+                onChange={handleChange}
+                required
+              />
+            </div>
           </>
         )}
         {query.type === "Office" && (

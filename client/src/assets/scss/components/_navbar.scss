@@ -50,14 +50,7 @@ nav {
       }
 
       span {
-        color: #fff;
-        @include md {
-          display: none;
-        }
-
-        @include sm {
-          display: initial;
-        }
+        color: #fff;}
       }
     }
   }
@@ -214,7 +207,7 @@ nav {
 
 
     }
-  }
+  
 
 
 

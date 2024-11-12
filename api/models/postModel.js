@@ -37,6 +37,7 @@ const postSchema = new Schema({
   engineSize: { type: String, default: null },
   mileage: { type: Number, default: null },
   floorNumber: { type: Number, default: null },
+  field: { type: Number, default: null },
   roomCount: { type: Number, default: null },
   truckLoadCapacity: { type: Number, default: null },
   registerNumber: { type: String, default: null },

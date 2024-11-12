@@ -34,7 +34,7 @@ function UploadWidget({ uwConfig, setState }) {
         ...uwConfig,
         cloudName: "rufodev", // Replace with your Cloudinary cloud name
         uploadPreset: "ads_web", // Replace with your upload preset
-        transformation: [{ width: 500, height: 500, crop: "fill" }] 
+        transformation: [{ width: 500, height: 500, crop: "cover" }] 
       };
 
       var myWidget = window.cloudinary.createUploadWidget(
