@@ -1,0 +1,73 @@
+.user {
+    position: relative;
+}
+
+#menuToggle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+#menuToggle input {
+    display: none;
+}
+
+.toggle {
+    display: block;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    position: relative;
+}
+
+.bar {
+    width: 100%;
+    height: 4px;
+    background-color: #333;
+    margin: 5px 0;
+    transition: 0.3s;
+}
+
+
+.right {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user-info span {
+    font-size: 14px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.notification {
+    background-color: red;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 50%;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+.register {
+  
+    margin-top: 5px;
+}
+
+
+@media (max-width:768px) {
+    .user{
+        display: none !important;
+    }
+}
