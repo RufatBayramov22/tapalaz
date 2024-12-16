@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Axios örneğini oluştur
 const apiRequest = axios.create({
-  baseURL: "http://localhost:8800", 
+  baseURL: "https://tapalaz-2-ryj8.onrender.com", 
   withCredentials: true, 
 });
 
