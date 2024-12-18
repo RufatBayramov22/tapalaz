@@ -235,7 +235,7 @@ function Filter({ onFilter }) {
   return (
     <div className="filter">
       <h1>
-        Search results for <b>{searchParams.get("city")}</b>
+        {t("searchResults")} <b>{searchParams.get("city")}</b>
       </h1>
       <div className="top">
         <div className="item">
@@ -246,7 +246,7 @@ function Filter({ onFilter }) {
             value={query.city}
             className="thing"
           >
-            <option value="">Select a City</option>
+            <option value="">{t("selectCity")}</option>
             {cities.map((city) => (
               <option key={city} value={city}>
                 {city}
@@ -257,7 +257,7 @@ function Filter({ onFilter }) {
       </div>
       <div className="bottom">
         <div className="item">
-          <label htmlFor="type">Type</label>
+          <label htmlFor="type">{t("type")}</label>
           <select
             name="type"
             id="type"
@@ -335,7 +335,7 @@ function Filter({ onFilter }) {
           </select>
         </div>
         <div className="item">
-          <label htmlFor="minPrice">Min Price</label>
+          <label htmlFor="minPrice">{t("minPrice")}</label>
           <input
             type="number"
             id="minPrice"
@@ -346,7 +346,7 @@ function Filter({ onFilter }) {
           />
         </div>
         <div className="item">
-          <label htmlFor="maxPrice">Max Price</label>
+          <label htmlFor="maxPrice">{t("maxPrice")}</label>
           <input
             type="number"
             id="maxPrice"

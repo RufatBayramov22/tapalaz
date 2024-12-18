@@ -10,8 +10,12 @@ i18n
     resources: {
       en: {
         translation: {
+          searchResults: "Search Results For",
+          selectCity:"Select City",
           home:"Home",
           search:"Search",
+          minPrice:"Min Price",
+          maxPrice:"Max Price",
           citySelect: "Select a City",
           vehicles: "Vehicles",
           waterTransport: "Water Transport",
@@ -116,7 +120,11 @@ i18n
       },
       az: {
         translation: {
+          searchResults:"Axtarış nəticələri",
+          selectCity:"Şəhər seçin",
           home:"Ana Səhifə",
+          minPrice:"Min Qiymət",
+          maxPrice:"Max Qiymət",
           search:"Axtarış",
           newAdd: "Yeni Elan",
           citySelect: "Şəhər seçin",
@@ -227,9 +235,14 @@ i18n
       },
       ru: {
         translation: {
+          searchResults:"Результаты поиска",
+          selectCity:"Выберите город",
           home:"Дом",
           search:"Поиск",
           newAdd: "Новое",
+          minPrice:"мин. цена",
+          maxPrice:"макс. цена",
+    
           // NewPostPage Translations
           postTitle: "Заголовок",
           citySelect: "выберите город",
