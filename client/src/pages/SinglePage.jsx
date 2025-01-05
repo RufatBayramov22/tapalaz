@@ -4,8 +4,6 @@ import DOMPurify from "dompurify";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import PinIcon from "../assets/images/pin.png";
-import SavedIcon from "../assets/images/save.png";
-import ChatIcon from "../assets/images/chat.png";
 import apiRequest from "../lib/apiRequest";
 import Noavatar from "../assets/images/noavatar.jpeg"
 import { t } from "i18next";
@@ -44,91 +42,7 @@ console.log(post);
     return <div className="loading">Loading...</div>;
   }
 
-  // Dinamik render için kategoriye göre alanları gösteriyoruz
-  const renderCategorySpecificFields = () => {
-    switch (post.type) {
-      case "Avtomobiller":
-        return (
-          <>
-            <p><strong>Model:</strong> {post.model || "Məlumat yoxdur"}</p>
-            <p><strong>Motor Hacmi:</strong> {post.engineSize || "Məlumat yoxdur"}</p>
-            <p><strong>Kilometre:</strong> {post.mileage || "Məlumat yoxdur"}</p>
-            <p><strong>Yakıt Türü:</strong> {post.fuelType || "Məlumat yoxdur"}</p>
-            <p><strong>Vites:</strong> {post.gearbox || "Məlumat yoxdur"}</p>
-          </>
-        );
-      case "Su Nəqliyyatı":
-        return (
-          <>
-            <p><strong>Bot Türü:</strong> {post.boatType || "Məlumat yoxdur"}</p>
-            <p><strong>Uzunluk:</strong> {post.length || "Məlumat yoxdur"}</p>
-            <p><strong>Motor Gücü:</strong> {post.enginePower || "Məlumat yoxdur"}</p>
-          </>
-        );
-      case "Avtobuslar":
-        return (
-          <>
-            <p><strong>Otobüs Türü:</strong> {post.busType || "Məlumat yoxdur"}</p>
-            <p><strong>Koltuk Sayısı:</strong> {post.seatCount || "Məlumat yoxdur"}</p>
-          </>
-        );
-      case "Qeydiyyat Nişanları":
-        return <p><strong>Kayıt Numarası:</strong> {post.registerNumber || "Məlumat yoxdur"}</p>;
-      case "Phone":
-      case "Laptop":
-      case "Tablet":
-        return (
-          <>
-            <p><strong>Marka:</strong> {post.brand || "Məlumat yoxdur"}</p>
-            <p><strong>Model:</strong> {post.model || "Məlumat yoxdur"}</p>
-          </>
-        );
-      case "Simcard":
-        return <p><strong>Numara:</strong> {post.number || "Məlumat yoxdur"}</p>;
-      case "Kompyuter":
-        return (
-          <>
-            <p><strong>Marka:</strong> {post.brand || "Məlumat yoxdur"}</p>
-            <p><strong>Özellikler:</strong> {post.specifications || "Məlumat yoxdur"}</p>
-          </>
-        );
-      case "Smart-watch":
-        return (
-          <>
-            <p><strong>Marka:</strong> {post.brand || "Məlumat yoxdur"}</p>
-            <p><strong>Özellikler:</strong> {post.features || "Məlumat yoxdur"}</p>
-          </>
-        );
-      case "Car Parts":
-      case "Bike Parts":
-        return (
-          <>
-            <p><strong>Parça Adı:</strong> {post.partName || "Məlumat yoxdur"}</p>
-            <p><strong>Durum:</strong> {post.condition || "Məlumat yoxdur"}</p>
-          </>
-        );
-      case "Mənzillər":
-        return (
-          <>
-            <p><strong>Otaq Sayı:</strong> {post.roomCount || "Məlumat yoxdur"}</p>
-            <p><strong>Mərtəbə:</strong> {post.floorNumber || "Məlumat yoxdur"}</p>
-            <p><strong>Ölçü:</strong> {post.area || "Məlumat yoxdur"} m²</p>
-            <p><strong>Kira / Satış:</strong> {post.rentOrSale || "Məlumat yoxdur"}</p>
-          </>
-        );
-      case "Villalar":
-        return (
-          <>
-            <p><strong>Əmlakın Növü:</strong> {post.emlakinNovu || "Məlumat Yoxdur"}</p>
-            <p><strong>Ölçü:</strong> {post.area || "Məlumat yoxdur"} m²</p>
-            <p><strong>Otaq Sayı:</strong> {post.roomCount || "Məlumat yoxdur"}</p>
-            <p><strong>Kira / Satış:</strong> {post.rentOrSale || "Məlumat yoxdur"}</p>
-          </>
-        );
-      default:
-        return <p>Kategoriye özel Məlumat yoxdur.</p>;
-    }
-  };
+
 
   return (
     <div className="singlePage">
@@ -155,7 +69,6 @@ console.log(post);
                 </div>
                 <div className="price">AZN {post.price || "Qiymət haqqında məlumat yoxdu"}</div>
                 <div className="category">
-                  {renderCategorySpecificFields()}
                   <span>Kategoriya: {post.type || "Kategoriya hakkında məlumat yoxdu"}</span>
                 </div>
               </div>

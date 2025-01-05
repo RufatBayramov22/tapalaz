@@ -11,7 +11,7 @@ function SearchBar({ onFilter }) {
     minPrice: searchParams.get("minPrice") || 0,
     maxPrice: searchParams.get("maxPrice") || 100000,
   });
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const handleChange = (e) => {
     setQuery({

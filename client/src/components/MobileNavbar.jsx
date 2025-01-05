@@ -20,7 +20,7 @@ const MobileNavBar = () => {
   return (
     <div className="mobileNavBar">
       <nav className="navigation">
-        <div className="list">
+        <div className="list homeList">
           <div className="item">
             <Link to="/">
               <div className="icon">

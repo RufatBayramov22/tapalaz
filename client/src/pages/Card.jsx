@@ -1,7 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import SaveIcon from "../assets/images/save.png"
-import ChatIcon from "../assets/images/chat.png"
 import PinIcon from "../assets/images/pin.png"
 const Card = ({ item }) => {
   console.log(item.images);

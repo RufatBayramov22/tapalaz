@@ -9,7 +9,7 @@ import NewPostPage from "./components/NewPostPage";
 import ProfileUpdatePage from "./components/ProfileUpdatePage";
 import { RequireAuth, Layout } from "./pages/Layout";
 import Home from "./components/Home";
-import { homePageLoader, listPageLoader, postLoader, profilePageLoader, singlePageLoader } from "./lib/loaders";
+import { postLoader, profilePageLoader } from "./lib/loaders";
 import FilteredPage from "./pages/FilteredPage";
 
 function App() {

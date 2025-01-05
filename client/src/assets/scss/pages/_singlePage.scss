@@ -26,6 +26,8 @@
     }
 
     .info {
+      width: 40%;
+      overflow-y: auto;
       .top {
         display: flex;
         justify-content: space-between;

@@ -1,7 +1,9 @@
 import { useState } from "react";
-import RightIcon from "../assets/images/arrow.png"
+import RightIcon from "../assets/images/arrow.png";
+
 function Slider({ images }) {
   const [imageIndex, setImageIndex] = useState(null);
+  const [hoveredImage, setHoveredImage] = useState(null); // Hover zamanı göstəriləcək şəkil
 
   const changeSlide = (direction) => {
     if (direction === "left") {
@@ -37,8 +39,14 @@ function Slider({ images }) {
           </div>
         </div>
       )}
+
+      {/* Hover zamanı şəkil dəyişdirilməsi */}
       <div className="bigImage">
-        <img src={images[0]} alt="" onClick={() => setImageIndex(0)} />
+        <img
+          src={hoveredImage || images[0]} // Hover olunan şəkili göstər
+          alt=""
+          onClick={() => setImageIndex(0)}
+        />
       </div>
       <div className="smallImages">
         {images.slice(1).map((image, index) => (
@@ -46,6 +54,8 @@ function Slider({ images }) {
             src={image}
             alt=""
             key={index}
+            onMouseEnter={() => setHoveredImage(image)} // Hover olunduqda şəkili dəyişdir
+            onMouseLeave={() => setHoveredImage(null)} // Hover bitdikdə əsas şəkili geri qaytar
             onClick={() => setImageIndex(index + 1)}
           />
         ))}

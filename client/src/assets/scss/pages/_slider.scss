@@ -1,7 +1,7 @@
 @import "../responsive";
 
 .slider {
-  width: 55%;
+  width: 60%;
   flex-direction: column;
   display: flex;
   gap: 20px;
@@ -9,6 +9,20 @@
   @include sm {
     height: 280px;
   }
+
+  .slider .bigImage img {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .slider .smallImages img {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .slider .smallImages img:hover {
+    transform: scale(1.1); /* Hover zamanı kiçik şəkili böyüt */
+  }
+  
 
   .fullSlider {
     position: absolute;

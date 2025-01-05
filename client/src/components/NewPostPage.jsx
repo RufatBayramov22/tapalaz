@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ReactQuill from "react-quill";
 import UploadWidget from "../components/UploadWidget";
-import "react-quill/dist/quill.snow.css";
 import MobileNavBar from "./MobileNavbar";
 import apiRequest from "../lib/apiRequest";
 import { useTranslation } from "react-i18next";

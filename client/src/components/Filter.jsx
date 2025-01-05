@@ -34,17 +34,6 @@ function Filter({ onFilter }) {
     enginePower: searchParams.get("enginePower") || "",
   });
 
-  const carModels = [
-    "BMW",
-    "Mercedes-Benz",
-    "Toyota",
-    "Honda",
-    "Ford",
-    "Chevrolet",
-    "Nissan",
-    "Volkswagen",
-  ];
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setQuery((prev) => ({ ...prev, [name]: value }));

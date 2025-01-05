@@ -1,5 +1,4 @@
-import React, { Suspense, useContext, useState, useEffect } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import React, { Suspense, useState, useEffect } from 'react';
 import HomeCard from '../pages/HomeCard';
 import Catalog from '../pages/Catalog';
 import { Await, useLoaderData, useSearchParams } from 'react-router-dom';
@@ -7,7 +6,6 @@ import Loader from '../pages/Loader';
 import apiRequest from '../lib/apiRequest';
 
 function HomePage() {
-  const { currentUser } = useContext(AuthContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const [filteredData, setFilteredData] = useState(null);
 
@@ -47,7 +45,7 @@ function HomePage() {
       <div className="homePage">
         <Catalog onFilterChange={handleFilterChange} />
 
-        <div className='list'>
+        <div className='list homeList'>
           <Suspense fallback={<Loader/>}>
             <Await
               resolve={filteredData || data.postResponse}
