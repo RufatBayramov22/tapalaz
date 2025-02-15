@@ -1,12 +1,11 @@
 import { useLoaderData } from 'react-router-dom';
-import Card from '../pages/Card'; 
+import HomeCard from '../pages/HomeCard'; 
 function List({posts}) {
   const post = useLoaderData();
-  console.log(post);
   return (
     <div className='list'>
       {posts?.map(item => (
-        <Card key={item._id} item={item} /> 
+        <HomeCard key={item._id} item={item} /> 
       ))}
     </div>
   );

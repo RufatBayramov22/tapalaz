@@ -2,7 +2,8 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import SearchBar from "../pages/SearchBar";
-import Add from "../assets/images/addIcon.jpg"
+import Add from "../assets/images/add.png"
+
 import { useTranslation } from "react-i18next";
 function Navbar() {
   const [open, setOpen] = useState(false);
@@ -20,7 +21,7 @@ const handleFilterChange = (newFilterQuery) => {
   setFilterQuery(newFilterQuery);
 };
   return (
-    <div className="contanier">
+    <div className="contanier navBar">
  <nav>
       <div className="left">
         <Link to="/" className="logo">

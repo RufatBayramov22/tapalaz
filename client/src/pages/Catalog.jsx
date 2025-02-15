@@ -10,7 +10,13 @@ import RealEstate from "../assets/images/realEstate.png";
 import Vacancy from "../assets/images/job.avif";
 import Xidmet from "../assets/images/homeAcs.jpeg";
 import Animals from "../assets/images/zoo.png"
+import { Swiper, SwiperSlide } from 'swiper/react';
 
+import 'swiper/css';
+import 'swiper/css/pagination';
+
+
+import { Pagination } from 'swiper/modules';
 const Catalog = ({ onFilterChange }) => {
   const { t } = useTranslation();
   const [openCategory, setOpenCategory] = useState(null);
@@ -73,11 +79,10 @@ const Catalog = ({ onFilterChange }) => {
   };
 
   const handleFilterChange = (subcategory) => {
-    onFilterChange(subcategory);  // Filtrə subkateqoriyanı göndəririk
-    // Sayfayı aşağı kaydırmak için:
+    onFilterChange(subcategory);  
     window.scrollTo({
-      top: window.innerHeight, // Sayfanın alt kısmına kaydırma
-      behavior: 'smooth', // Yumuşak kaydırma
+      top: window.innerHeight, 
+      behavior: 'smooth', 
     });
   };
 
@@ -106,6 +111,35 @@ const Catalog = ({ onFilterChange }) => {
               </div>
             ))}
           </div>
+          <div className="swiperCatalog">
+      <Swiper
+        slidesPerView={4}
+        centeredSlides={true}
+        spaceBetween={30}
+        grabCursor={true}
+        pagination={{ clickable: true }}
+        modules={[Pagination]}
+        className="mySwiper"
+      >
+        {categories.map((category) => (
+          <SwiperSlide key={category.name}>
+            <div className="catalogCard" onClick={() => handleCategoryClick(category.name)}>
+              <img src={category.img} alt={category.name} />
+              <div>
+                <p>{category.name}</p>
+              </div>
+              <div className={`dropdownContent ${openCategory === category.name ? 'show' : ''}`}>
+                {category.subcategories.map((subcat) => (
+                  <div key={subcat} className="dropdownItem" onClick={() => handleFilterChange(subcat)}>
+                    {subcat}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
         </div>
       </div>
     </section>

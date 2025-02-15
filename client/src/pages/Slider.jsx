@@ -46,6 +46,7 @@ function Slider({ images }) {
           src={hoveredImage || images[0]} // Hover olunan şəkili göstər
           alt=""
           onClick={() => setImageIndex(0)}
+          className="big"
         />
       </div>
       <div className="smallImages">
